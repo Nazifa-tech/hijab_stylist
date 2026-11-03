@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hijab Stylist tests</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 1rem; }
+    .pass { color: #1a7f37; }
+    .fail { color: #b3261e; }
+    li { margin: 4px 0; }
+  </style>
+</head>
+<body>
+  <h1>Tests</h1>
+  <p id="summary">Running…</p>
+  <ul id="list"></ul>
+
+  <script type="module">
+    import { getResults } from './helper.js';
+    // Add one line per test file as the project grows.
+    import './colour.test.js';
+    import './suggest.test.js';
+    import './storage.test.js';
+
+    const results = getResults();
+    const passed = results.filter((r) => r.ok).length;
+    document.getElementById('summary').textContent = `${passed} of ${results.length} passed`;
+    document.getElementById('list').innerHTML = results
+      .map((r) => r.ok
+        ? `<li class="pass">PASS: ${r.name}</li>`
+        : `<li class="fail">FAIL: ${r.name}<br>${r.error}</li>`)
+      .join('');
+  </script>
+</body>
+</html>

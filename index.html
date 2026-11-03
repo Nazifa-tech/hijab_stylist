@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hijab Stylist</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Hijab Stylist</h1>
+    <nav>
+      <button id="nav-back">← Back</button>
+      <button id="nav-favourites">♥ Favourites</button>
+    </nav>
+  </header>
+
+  <div id="tip-area" style="display:none;"></div>
+
+  <!-- Step 1: Upload -->
+  <section id="screen-upload">
+    <h2>Upload your outfit</h2>
+    <p>Take or pick a photo of your outfit.</p>
+    <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp,image/gif,.heic,.heif">
+    <button id="upload-button">Use this photo</button>
+    <p class="hint">Supported: JPEG, PNG, WebP, GIF, HEIC</p>
+  </section>
+
+  <!-- Step 2: Confirm colours -->
+  <section id="screen-confirm">
+    <h2>Confirm colours</h2>
+    <p>The app found these colours. Remove any that don't belong (e.g. the background).</p>
+    <div id="colour-swatches"></div>
+    <button id="confirm-button">Looks good</button>
+    <button id="confirm-retry">Try a different photo</button>
+  </section>
+
+  <!-- Step 3: Set the vibe -->
+  <section id="screen-vibe">
+    <h2>Set the vibe</h2>
+    <p>Pick a mood and your skin tone(s).</p>
+
+    <h3>Mood</h3>
+    <div id="mood-buttons"></div>
+
+    <h3>Skin tone</h3>
+    <div id="skin-grid"></div>
+    <label><input type="checkbox" id="contrast-toggle"> Use two skin tones + highlight contrast</label>
+    <p class="hint">Two tones? Tap a second swatch (requires "Highlight contrast" checkbox). Covering vitiligo, melasma, or uneven pigmentation.</p>
+
+    <button id="vibe-next">Show me suggestions</button>
+  </section>
+
+  <!-- Step 4: Recommendations -->
+  <section id="screen-recs">
+    <h2>Pick a recommendation</h2>
+    <div id="model-area">
+      <button id="rotate-left" class="rotate-btn">◀</button>
+      <canvas id="model-canvas" width="200" height="340"></canvas>
+      <button id="rotate-right" class="rotate-btn">▶</button>
+      <img id="photo-preview" src="" alt="Your outfit">
+    </div>
+    <div id="anim-controls">
+      <button class="anim-btn active" data-state="idle">Idle</button>
+      <button class="anim-btn" data-state="walk">Walk</button>
+      <button class="anim-btn" data-state="turn">Turn</button>
+      <button class="anim-btn" data-state="pose">Pose</button>
+    </div>
+    <div id="suggestion-buttons"></div>
+  </section>
+
+  <!-- Favourites page -->
+  <section id="screen-favourites">
+    <h2>Your favourites</h2>
+    <div id="favourites-list"></div>
+  </section>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

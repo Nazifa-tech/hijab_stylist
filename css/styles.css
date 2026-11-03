@@ -1,0 +1,402 @@
+/* Hijab Stylist — mobile-first styles */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #faf8f5;
+  --text: #1a1a1a;
+  --accent: #2f5d3a;
+  --accent-light: #7a9c6b;
+  --grey: #d4d0c8;
+  --danger: #b3261e;
+  --radius: 10px;
+  --font: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.4;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+
+header {
+  background: #fff;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--grey);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  font-size: 1.1rem;
+  margin: 0;
+  color: var(--accent);
+}
+
+header nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+header nav button {
+  background: none;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+/* ── Sections ─────────────────────────────────────────────────────────── */
+
+section {
+  display: none;
+  padding: 1rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+section h2 {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem;
+}
+
+section h3 {
+  font-size: 1rem;
+  margin: 1rem 0 0.5rem;
+}
+
+/* ── Tip area ─────────────────────────────────────────────────────────── */
+
+#tip-area {
+  background: #fff3cd;
+  border: 1px solid #f0c020;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  display: none;
+}
+
+/* ── Upload screen ────────────────────────────────────────────────────── */
+
+#photo-input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 2px dashed var(--grey);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+#upload-button {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+/* ── Confirm screen ───────────────────────────────────────────────────── */
+
+#colour-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #fff;
+  border: 1px solid var(--grey);
+  border-radius: var(--radius);
+  padding: 0.3rem;
+}
+
+.swatch-colour {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.swatch-remove {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+#confirm-button,
+#confirm-retry {
+  display: block;
+  width: 100%;
+  padding: 0.7rem;
+  margin: 0.4rem 0;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#confirm-button {
+  background: var(--accent);
+  color: #fff;
+}
+
+#confirm-retry {
+  background: var(--grey);
+  color: var(--text);
+}
+
+/* ── Vibe screen ──────────────────────────────────────────────────────── */
+
+#mood-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.mood-btn {
+  padding: 0.6rem;
+  border: 2px solid var(--grey);
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.mood-btn.selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: #fff;
+}
+
+#skin-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.3rem;
+}
+
+.skin-btn {
+  aspect-ratio: 1;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.skin-btn.selected {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent);
+}
+
+#contrast-toggle {
+  margin-top: 0.5rem;
+}
+
+#vibe-next {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* ── Recommendations screen ────────────────────────────────────────────── */
+
+#model-area {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+}
+
+.rotate-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: var(--grey);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.rotate-btn:hover { background: var(--accent-light); color: #fff; }
+.rotate-btn:active { background: var(--accent); }
+
+#model-canvas {
+  flex: 1;
+  max-width: 200px;
+  height: auto;
+}
+
+#anim-controls {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.anim-btn {
+  padding: 0.35rem 0.7rem;
+  border: 2px solid var(--grey);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.anim-btn.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+#photo-preview {
+  flex: 1;
+  max-width: 50%;
+  border-radius: var(--radius);
+}
+
+#suggestion-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.suggestion {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff;
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--grey);
+}
+
+.suggestion-swatch {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.suggestion-info {
+  flex: 1;
+  font-size: 0.85rem;
+}
+
+.suggestion-reason {
+  margin: 0 0 0.3rem;
+}
+
+.suggestion-tip {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.suggestion-actions {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.fav-btn,
+.reject-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  background: var(--grey);
+}
+
+.fav-btn.active {
+  background: #e03a3a;
+  color: #fff;
+}
+
+.reject-btn.active {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* ── Favourites screen ────────────────────────────────────────────────── */
+
+#favourites-list {
+  margin: 0.5rem 0;
+}
+
+.fav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid var(--grey);
+  border-radius: var(--radius);
+  margin-bottom: 0.3rem;
+}
+
+.fav-remove {
+  background: var(--danger);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* ── Buttons in general ──────────────────────────────────────────────── */
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  opacity: 0.8;
+}
