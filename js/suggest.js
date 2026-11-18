@@ -7,8 +7,8 @@
 // colour theory (complementary, analogous, neutral anchors) adjusted by mood.
 // The same input always gives the same output.
 
-import { hexToRgb, rgbToHsl, hueDifference, relativeLuminance } from './colour.js';
-import { styleTips } from './data.js';
+
+
 
 // ── Base hijab colour palette ────────────────────────────────────────────
 
@@ -57,14 +57,14 @@ const MOOD_WEIGHTS = {
 
 // ── Hex-to-name lookup ──────────────────────────────────────────────────
 
-export function colourName(hex) {
+function colourName(hex) {
   const c = HIJAB_PALETTE.find((h) => h.hex === hex);
   return c ? c.name : hex;
 }
 
 // ── Main suggestion function ─────────────────────────────────────────────
 
-export function suggest(outfitColours, mood, skinTones, opts = {}) {
+function suggest(outfitColours, mood, skinTones, opts = {}) {
   const { mode = 'balance', rejected = [] } = opts;
   const weights = MOOD_WEIGHTS[mood] || MOOD_WEIGHTS.soft;
 

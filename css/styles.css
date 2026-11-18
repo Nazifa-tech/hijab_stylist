@@ -1,18 +1,47 @@
-/* Hijab Stylist — mobile-first styles */
+/* Hijab Stylist — mobile-first, dark-mode-ready styles */
 
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
+/* ── Light theme (default) ────────────────────────────────────────────── */
+
 :root {
   --bg: #faf8f5;
+  --bg-card: #ffffff;
   --text: #1a1a1a;
+  --text-soft: #555;
   --accent: #2f5d3a;
+  --accent-hover: #3d7a4e;
   --accent-light: #7a9c6b;
-  --grey: #d4d0c8;
+  --accent-fade: #e8f0e4;
+  --border: #d4d0c8;
+  --border-light: #e8e4dc;
   --danger: #b3261e;
+  --warn-bg: #fff3cd;
+  --warn-border: #f0c020;
   --radius: 10px;
   --font: system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+
+/* ── Dark theme ────────────────────────────────────────────────────────── */
+
+html.dark, :root.dark {
+  --bg: #121212;
+  --bg-card: #1e1e1e;
+  --text: #e8e8e8;
+  --text-soft: #aaa;
+  --accent: #6bae7e;
+  --accent-hover: #7fc490;
+  --accent-light: #8fc4a0;
+  --accent-fade: #1e2e22;
+  --border: #3a3a3a;
+  --border-light: #2a2a2a;
+  --danger: #d86a60;
+  --warn-bg: #3a3010;
+  --warn-border: #8a7020;
+  color-scheme: dark;
 }
 
 body {
@@ -22,20 +51,64 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.4;
+  transition: background 0.25s, color 0.25s;
+}
+
+/* ── JS-fail fallback overlay (theme-aware: dark bg + light text in dark mode,
+   light bg + dark text in light mode) ─────────────────────────────────── */
+.js-fail {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  text-align: center;
+}
+.js-fail h1 {
+  color: var(--accent);
+  margin: 0 0 1rem;
+}
+.js-fail p {
+  margin: 0 0 1rem;
+}
+.js-fail pre {
+  background: var(--accent-fade);
+  color: var(--text);
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  margin: 0 0 1rem;
+  font-size: 1rem;
 }
 
 /* ── Header ───────────────────────────────────────────────────────────── */
 
 header {
-  background: #fff;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--grey);
+  background: var(--bg-card);
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.logo-leaf {
+  color: var(--accent);
+  display: block;
 }
 
 header h1 {
@@ -46,17 +119,23 @@ header h1 {
 
 header nav {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  align-items: center;
 }
 
-header nav button {
-  background: none;
-  border: none;
-  padding: 0.3rem 0.6rem;
-  font-size: 0.9rem;
+.icon-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.3rem 0.5rem;
+  font-size: 1rem;
   cursor: pointer;
   color: var(--text);
+  border-radius: 6px;
+  transition: background 0.15s;
+  line-height: 1;
 }
+.icon-btn:hover { background: var(--accent-fade); }
+.icon-btn:active { background: var(--border); }
 
 /* ── Sections ─────────────────────────────────────────────────────────── */
 
@@ -80,8 +159,8 @@ section h3 {
 /* ── Tip area ─────────────────────────────────────────────────────────── */
 
 #tip-area {
-  background: #fff3cd;
-  border: 1px solid #f0c020;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
   padding: 0.75rem 1rem;
   margin: 0.5rem 1rem;
   border-radius: var(--radius);
@@ -96,9 +175,9 @@ section h3 {
   width: 100%;
   padding: 0.5rem;
   margin: 0.5rem 0;
-  border: 2px dashed var(--grey);
+  border: 2px dashed var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--bg-card);
 }
 
 #upload-button {
@@ -106,16 +185,17 @@ section h3 {
   width: 100%;
   padding: 0.8rem;
   background: var(--accent);
-  color: #fff;
+  color: var(--bg);
   border: none;
   border-radius: var(--radius);
   font-size: 1rem;
   cursor: pointer;
 }
+#upload-button:hover { background: var(--accent-hover); }
 
 .hint {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--text-soft);
   margin: 0.5rem 0;
 }
 
@@ -132,8 +212,8 @@ section h3 {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  background: #fff;
-  border: 1px solid var(--grey);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 0.3rem;
 }
@@ -147,7 +227,7 @@ section h3 {
 
 .swatch-remove {
   background: var(--danger);
-  color: #fff;
+  color: var(--bg-card);
   border: none;
   border-radius: 50%;
   width: 24px;
@@ -170,11 +250,12 @@ section h3 {
 
 #confirm-button {
   background: var(--accent);
-  color: #fff;
+  color: var(--bg);
 }
+#confirm-button:hover { background: var(--accent-hover); }
 
 #confirm-retry {
-  background: var(--grey);
+  background: var(--border);
   color: var(--text);
 }
 
@@ -188,17 +269,17 @@ section h3 {
 
 .mood-btn {
   padding: 0.6rem;
-  border: 2px solid var(--grey);
+  border: 2px solid var(--border);
   border-radius: var(--radius);
-  background: #fff;
+  background: var(--bg-card);
   font-size: 0.85rem;
   cursor: pointer;
 }
 
 .mood-btn.selected {
   border-color: var(--accent);
-  background: var(--accent-light);
-  color: #fff;
+  background: var(--accent);
+  color: var(--bg);
 }
 
 #skin-grid {
@@ -254,16 +335,16 @@ section h3 {
   height: 32px;
   border: none;
   border-radius: 50%;
-  background: var(--grey);
+  background: var(--border);
   font-size: 1.1rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background 0.2s;
+  color: var(--text);
 }
-.rotate-btn:hover { background: var(--accent-light); color: #fff; }
-.rotate-btn:active { background: var(--accent); }
+.rotate-btn:hover { background: var(--accent); color: var(--bg); }
 
 #model-canvas {
   flex: 1;
@@ -280,17 +361,18 @@ section h3 {
 
 .anim-btn {
   padding: 0.35rem 0.7rem;
-  border: 2px solid var(--grey);
+  border: 2px solid var(--border);
   border-radius: 999px;
-  background: #fff;
+  background: var(--bg-card);
   font-size: 0.8rem;
   cursor: pointer;
+  color: var(--text);
 }
 
 .anim-btn.active {
   border-color: var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--bg);
 }
 
 #photo-preview {
@@ -309,10 +391,10 @@ section h3 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #fff;
+  background: var(--bg-card);
   padding: 0.5rem;
   border-radius: var(--radius);
-  border: 1px solid var(--grey);
+  border: 1px solid var(--border);
 }
 
 .suggestion-swatch {
@@ -335,7 +417,7 @@ section h3 {
 .suggestion-tip {
   margin: 0;
   font-size: 0.8rem;
-  color: #555;
+  color: var(--text-soft);
 }
 
 .suggestion-actions {
@@ -351,18 +433,43 @@ section h3 {
   border-radius: 50%;
   font-size: 1rem;
   cursor: pointer;
-  background: var(--grey);
+  background: var(--border);
+  color: var(--text);
 }
 
 .fav-btn.active {
-  background: #e03a3a;
-  color: #fff;
+  background: var(--danger);
+  color: var(--bg-card);
 }
 
 .reject-btn.active {
   background: var(--danger);
-  color: #fff;
+  color: var(--bg-card);
 }
+
+.styles-heading {
+  margin: 0.8rem 0 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.view-more-btn {
+  display: block;
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.5rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--accent);
+  text-align: center;
+}
+.view-more-btn:hover { background: var(--accent); color: var(--bg); }
+.view-more-btn.back { border-color: var(--accent); }
+.view-more-btn.back:hover { background: var(--accent-fade); color: var(--accent); }
 
 /* ── Favourites screen ────────────────────────────────────────────────── */
 
@@ -375,15 +482,16 @@ section h3 {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  background: #fff;
-  border: 1px solid var(--grey);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   margin-bottom: 0.3rem;
+  color: var(--text);
 }
 
 .fav-remove {
   background: var(--danger);
-  color: #fff;
+  color: var(--bg-card);
   border: none;
   border-radius: var(--radius);
   padding: 0.3rem 0.6rem;

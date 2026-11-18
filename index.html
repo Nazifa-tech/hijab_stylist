@@ -5,13 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hijab Stylist</title>
   <link rel="stylesheet" href="css/styles.css">
+  <!-- Preload theme before page paints to avoid flash -->
+  <script>
+    (function(){
+      const t = localStorage.getItem('hijab-theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 </head>
 <body>
-  <header>
+  <!-- Fallback shown if JS doesn't load / Chrome blocks modules on file:// -->
+  <noscript>
+    <div style="padding:2rem;font-family:system-ui,sans-serif;background:#faf8f5;color:#1a1a1a;min-height:100vh;">
+      <h1 style="color:#2f5d3a;">Hijab Stylist</h1>
+      <p>JavaScript is required. Please serve the page over HTTP:</p>
+      <pre style="background:#e8e4dc;padding:0.8rem;border-radius:8px;">python -m http.server</pre>
+      <p>Then open <strong>http://localhost:8000</strong></p>
+    </div>
+  </noscript>
+  <!-- JS-fail overlay: visible on file:// when module script is blocked.
+       The module script hides this as its first action. If the module never loads,
+       this overlay stays visible so the user sees a helpful message instead of blank. -->
+  <div id="js-fail" class="js-fail" style="display:flex;position:fixed;inset:0;z-index:999;">
     <h1>Hijab Stylist</h1>
+    <p>This app needs to be served over HTTP instead of opened directly from a file.</p>
+    <pre>python -m http.server</pre>
+    <p>Then open <strong>http://localhost:8000</strong> in your browser.</p>
+  </div>
+  <header>
+    <a class="logo-area" href="index.html" aria-label="Hijab Stylist home">
+      <svg class="logo-leaf" viewBox="0 0 36 36" width="28" height="28" aria-hidden="true">
+        <path d="M18 4 C20 12 24 16 30 18 C24 20 20 24 18 32 C16 24 12 20 6 18 C12 16 16 12 18 4Z"
+              fill="currentColor" opacity="0.85"/>
+        <circle cx="18" cy="15" r="2" fill="currentColor" opacity="0.5"/>
+      </svg>
+      <h1>Hijab Stylist</h1>
+    </a>
     <nav>
-      <button id="nav-back">← Back</button>
-      <button id="nav-favourites">♥ Favourites</button>
+      <button id="theme-toggle" class="icon-btn" title="Toggle theme">🌓</button>
+      <button id="nav-back" class="icon-btn">←</button>
+      <button id="nav-favourites" class="icon-btn">♥</button>
     </nav>
   </header>
 
@@ -75,6 +110,14 @@
     <div id="favourites-list"></div>
   </section>
 
-  <script type="module" src="js/app.js"></script>
+  <!-- Regular scripts (not modules — works on file:// in any browser) -->
+  <script src="js/colour.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/suggest.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/colourReader.js"></script>
+  <script src="js/photoCheck.js"></script>
+  <script src="js/sprite.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

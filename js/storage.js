@@ -18,7 +18,7 @@ const STORAGE_KEY_PREFERENCES = 'hijab.preferences';
 
 let storageAvailable = null; // lazily checked
 
-export function isAvailable() {
+function isAvailable() {
   if (storageAvailable !== null) return storageAvailable;
   try {
     const testKey = 'hijab.test';
@@ -60,15 +60,15 @@ function getArray(key) {
 
 // ── Favourites ───────────────────────────────────────────────────────────
 
-export function getFavourites() {
+function getFavourites() {
   return getArray(STORAGE_KEY_FAVOURITES);
 }
 
-export function isFavourite(outfitId, hex) {
+function isFavourite(outfitId, hex) {
   return getFavourites().some((f) => f.outfitId === outfitId && f.hex === hex);
 }
 
-export function saveFavourite(outfitId, hex) {
+function saveFavourite(outfitId, hex) {
   const items = getFavourites();
   // Remove any existing entry for this pairing (prevents duplicates)
   const filtered = items.filter((f) => !(f.outfitId === outfitId && f.hex === hex));
@@ -78,7 +78,7 @@ export function saveFavourite(outfitId, hex) {
   return setRaw(STORAGE_KEY_FAVOURITES, filtered);
 }
 
-export function removeFavourite(outfitId, hex) {
+function removeFavourite(outfitId, hex) {
   const items = getFavourites();
   const filtered = items.filter((f) => !(f.outfitId === outfitId && f.hex === hex));
   return setRaw(STORAGE_KEY_FAVOURITES, filtered);
@@ -92,15 +92,15 @@ function removeRejectionInternal(outfitId, hex) {
   setRaw(STORAGE_KEY_REJECTIONS, filtered);
 }
 
-export function getRejections() {
+function getRejections() {
   return getArray(STORAGE_KEY_REJECTIONS);
 }
 
-export function isRejected(outfitId, hex) {
+function isRejected(outfitId, hex) {
   return getRejections().some((r) => r.outfitId === outfitId && r.hex === hex);
 }
 
-export function saveRejection(outfitId, hex) {
+function saveRejection(outfitId, hex) {
   const items = getRejections();
   const filtered = items.filter((r) => !(r.outfitId === outfitId && r.hex === hex));
   // Also remove from favourites (mutually exclusive)
@@ -109,13 +109,13 @@ export function saveRejection(outfitId, hex) {
   return setRaw(STORAGE_KEY_REJECTIONS, filtered);
 }
 
-export function removeRejection(outfitId, hex) {
+function removeRejection(outfitId, hex) {
   const items = getRejections();
   const filtered = items.filter((r) => !(r.outfitId === outfitId && r.hex === hex));
   return setRaw(STORAGE_KEY_REJECTIONS, filtered);
 }
 
-export function clearAll() {
+function clearAll() {
   if (!isAvailable()) return false;
   try {
     localStorage.removeItem(STORAGE_KEY_FAVOURITES);
@@ -129,7 +129,7 @@ export function clearAll() {
 
 // ── Preferences ──────────────────────────────────────────────────────────
 
-export function getPreference(key, defaultValue = null) {
+function getPreference(key, defaultValue = null) {
   const prefs = getRaw(STORAGE_KEY_PREFERENCES);
   if (prefs && typeof prefs === 'object' && prefs[key] !== undefined) {
     return prefs[key];
@@ -137,7 +137,7 @@ export function getPreference(key, defaultValue = null) {
   return defaultValue;
 }
 
-export function savePreference(key, value) {
+function savePreference(key, value) {
   let prefs = getRaw(STORAGE_KEY_PREFERENCES);
   if (!prefs || typeof prefs !== 'object') {
     prefs = {};

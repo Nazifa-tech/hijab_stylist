@@ -14,7 +14,7 @@ const BIN_EPSILON = 40;       // colour distance threshold for binning
 
 // ── Main function ───────────────────────────────────────────────────────
 
-export function readDominantColours(imageSrc) {
+function readDominantColours(imageSrc) {
   return new Promise((resolve, reject) => {
     const img = document.createElement('img');
     img.onload = () => {
@@ -69,8 +69,7 @@ function sampleImage(img) {
 }
 
 // ── Bin similar colours together ───────────────────────────────────────
-
-import { colourDistance } from './colour.js';
+// colourDistance is global (from colour.js, loaded earlier).
 
 function binColours(colours) {
   const bins = [];

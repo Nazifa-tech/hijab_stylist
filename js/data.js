@@ -11,7 +11,7 @@
 //   label — shown to the user
 //   desc  — short description
 
-export const moods = [
+const moods = [
   { id: 'soft',       label: 'Soft',       desc: 'Muted, analogous colours — a gentle look' },
   { id: 'bold',       label: 'Bold',       desc: 'Vibrant, complementary colours — a striking look' },
   { id: 'professional', label: 'Professional', desc: 'Subdued, neutral colours — a polished look' },
@@ -27,7 +27,7 @@ export const moods = [
 //   undertone — 'cool', 'neutral', or 'warm'
 // The swatches are ordered lightest to darkest (keeping undertones grouped).
 
-export const skinTones = [
+const skinTones = [
   // ── Cool undertones (pinkish, bluish) ───────────────────────────────
   { id: 'cool-1', name: 'Very light cool',  hex: '#f5e0e0', undertone: 'cool' },
   { id: 'cool-2', name: 'Light cool',       hex: '#e8c8c8', undertone: 'cool' },
@@ -54,7 +54,7 @@ export const skinTones = [
 //
 // This is a first draft; content should be reviewed by hijab wearers.
 
-export const styleTips = [
+const styleTips = [
   {
     id: 'draped-wrap',
     title: 'Draped wrap',

@@ -8,7 +8,7 @@
 
 const SUPPORTED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/heic', 'image/heif', 'image/heic-sequence'];
 
-export function isSupportedType(file) {
+function isSupportedType(file) {
   const type = file.type?.toLowerCase() || '';
   const ext = file.name?.toLowerCase() || '';
   return SUPPORTED_TYPES.includes(type)
@@ -18,7 +18,7 @@ export function isSupportedType(file) {
     || ext.endsWith('.heic') || ext.endsWith('.heif');
 }
 
-export function checkPhoto(file) {
+function checkPhoto(file) {
   // 1. Check file type
   if (!isSupportedType(file)) {
     return {
@@ -44,7 +44,7 @@ export function checkPhoto(file) {
 
 // ── Image quality checks ────────────────────────────────────────────────
 
-export function checkImageQuality(imageSrc) {
+function checkImageQuality(imageSrc) {
   return new Promise((resolve) => {
     const img = document.createElement('img');
     img.onload = () => {

@@ -8,20 +8,20 @@
 // The figure is a female fashion model: hourglass silhouette with a soft
 // bust, nipped waist, fuller hips, an A-line dress, and a flowing hijab.
 
-import { rgbToHex } from './colour.js';
 
-export const FRAME_W = 200;
-export const FRAME_H = 340;
+
+const FRAME_W = 200;
+const FRAME_H = 340;
 
 // One animation state per sprite-sheet row.
-export const STATES = {
+const STATES = {
   idle: { row: 0, frames: 2, fps: 1.6, loop: true },
   walk: { row: 1, frames: 6, fps: 9,   loop: true },
   turn: { row: 2, frames: 4, fps: 2.2, loop: true },
   pose: { row: 3, frames: 4, fps: 1.1, loop: true },
 };
-export const MAX_FRAMES = 6;
-export const VIEWS = ['front', 'three-quarter', 'side', 'back'];
+const MAX_FRAMES = 6;
+const VIEWS = ['front', 'three-quarter', 'side', 'back'];
 
 // ── Colour helpers ──────────────────────────────────────────────────────
 
@@ -218,34 +218,44 @@ function drawHijabAndHead(ctx, c, p, opts) {
     g.moveTo(122, 42); g.quadraticCurveTo(126, 72, 140, 104);
   });
 
-  // 2) Face — oval with female proportions.
+  // 2) Fill the full face opening with hijab colour first (prevents bald spots
+  //    when the face ellipse is smaller than the hood opening, especially in
+  //    back and side views after scaling).
+  ellipse(ctx, hjC, 100, 70, 18, 26);
+
+  // 3) Face skin — drawn over the hijab fill so the skin shows for front/side views.
+  //    For back view the skin is skipped, keeping only the hijab fill.
   const faceView = view === 'side' ? 'side' : view;
-  if (twoTone && faceView !== 'side') {
-    ctx.save();
-    ctx.beginPath(); ctx.rect(82, 40, 18, 58); ctx.clip();
-    ellipse(ctx, hx(s1), 100, 70, 18, 26);
-    ctx.restore();
-    ctx.save();
-    ctx.beginPath(); ctx.rect(100, 40, 18, 58); ctx.clip();
-    ellipse(ctx, hx(s2), 100, 70, 18, 26);
-    ctx.restore();
-  } else {
-    ellipse(ctx, hx(s1), 100, 70, 18, 26);
+  if (view !== 'back') {
+    if (twoTone && faceView !== 'side') {
+      ctx.save();
+      ctx.beginPath(); ctx.rect(82, 40, 18, 58); ctx.clip();
+      ellipse(ctx, hx(s1), 100, 70, 18, 26);
+      ctx.restore();
+      ctx.save();
+      ctx.beginPath(); ctx.rect(100, 40, 18, 58); ctx.clip();
+      ellipse(ctx, hx(s2), 100, 70, 18, 26);
+      ctx.restore();
+    } else {
+      ellipse(ctx, hx(s1), 100, 70, 18, 26);
+    }
   }
 
-  // 3) Chin wrap: fabric crosses UNDER the chin, over the neck.
-  fillPath(ctx, hjC, (g) => {
-    g.moveTo(79, 82);
-    g.quadraticCurveTo(100, 104, 121, 82);
-    g.quadraticCurveTo(122, 102, 120, 118);
-    g.quadraticCurveTo(100, 110, 80, 118);
-    g.quadraticCurveTo(78, 102, 79, 82);
-  });
-  strokePath(ctx, hjLine, 0.8, 0.5, (g) => {
-    g.moveTo(79, 82); g.quadraticCurveTo(100, 104, 121, 82);
-  });
+  // 4) Chin wrap: fabric crosses UNDER the chin, over the neck.
+  if (view !== 'back') {
+    fillPath(ctx, hjC, (g) => {
+      g.moveTo(79, 82);
+      g.quadraticCurveTo(100, 104, 121, 82);
+      g.quadraticCurveTo(122, 102, 120, 118);
+      g.quadraticCurveTo(100, 110, 80, 118);
+      g.quadraticCurveTo(78, 102, 79, 82);
+    });
+    strokePath(ctx, hjLine, 0.8, 0.5, (g) => {
+      g.moveTo(79, 82); g.quadraticCurveTo(100, 104, 121, 82);
+    });
+  }
 
-  // 4) Face features.
+  // 5) Facial features.
   if (view === 'back') return;
   drawFaceFeatures(ctx, s1, skinLine, p.blink || 0, faceView);
 }
@@ -384,7 +394,7 @@ function frameParams(state, i) {
 // ── Sprite sheet builder ────────────────────────────────────────────────
 // Renders every frame of every state into one offscreen canvas (the sheet).
 
-export function buildSpriteSheet(colours) {
+function buildSpriteSheet(colours) {
   const sheet = document.createElement('canvas');
   sheet.width = FRAME_W * MAX_FRAMES;
   sheet.height = FRAME_H * Object.keys(STATES).length;
@@ -408,7 +418,7 @@ export function buildSpriteSheet(colours) {
 // setState() switches animation states; setView() steps the turn frames
 // manually (used by the rotate buttons); setColours() rebuilds the sheet.
 
-export class Animator {
+class Animator {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');

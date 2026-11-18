@@ -15,7 +15,7 @@ function clamp(n, min, max) {
 // ---------------------------------------------------------------------------
 
 // "#2f5d4a" (or "2f5d4a", or shorthand "#fa0") -> { r: 47, g: 93, b: 74 }
-export function hexToRgb(hex) {
+function hexToRgb(hex) {
   let h = String(hex).trim().replace(/^#/, '');
   if (h.length === 3) {
     h = h.split('').map((c) => c + c).join(''); // "fa0" -> "ffaa00"
@@ -31,7 +31,7 @@ export function hexToRgb(hex) {
 }
 
 // { r: 47, g: 93, b: 74 } -> "#2f5d4a"
-export function rgbToHex({ r, g, b }) {
+function rgbToHex({ r, g, b }) {
   const part = (n) => Math.round(clamp(n, 0, 255)).toString(16).padStart(2, '0');
   return '#' + part(r) + part(g) + part(b);
 }
@@ -44,7 +44,7 @@ export function rgbToHex({ r, g, b }) {
 //   l = lightness, 0 (black) to 1 (white)
 // ---------------------------------------------------------------------------
 
-export function rgbToHsl({ r, g, b }) {
+function rgbToHsl({ r, g, b }) {
   const rn = r / 255;
   const gn = g / 255;
   const bn = b / 255;
@@ -68,7 +68,7 @@ export function rgbToHsl({ r, g, b }) {
   return { h, s, l };
 }
 
-export function hslToRgb({ h, s, l }) {
+function hslToRgb({ h, s, l }) {
   const c = (1 - Math.abs(2 * l - 1)) * s; // how colourful the colour is
   const hp = (((h % 360) + 360) % 360) / 60; // which of the 6 slices of the wheel
   const x = c * (1 - Math.abs((hp % 2) - 1));
@@ -105,7 +105,7 @@ function srgbToLinear(v) {
 // How bright a colour looks, from 0 (black) to 1 (white).
 // Green counts for the most and blue for the least, because that is how our
 // eyes work. Pure yellow looks much brighter than pure blue.
-export function relativeLuminance({ r, g, b }) {
+function relativeLuminance({ r, g, b }) {
   return (
     0.2126 * srgbToLinear(r) +
     0.7152 * srgbToLinear(g) +
@@ -121,7 +121,7 @@ export function relativeLuminance({ r, g, b }) {
 // far apart in RGB but look nearly the same. CIELAB is a colour space designed
 // so that equal distances look about equally different to a person.
 //   L = lightness (0 to 100), a = green to red, b = blue to yellow
-export function rgbToLab({ r, g, b }) {
+function rgbToLab({ r, g, b }) {
   const rl = srgbToLinear(r);
   const gl = srgbToLinear(g);
   const bl = srgbToLinear(b);
@@ -141,7 +141,7 @@ export function rgbToLab({ r, g, b }) {
 
 // A number for "how different": 0 means identical, black vs white is about 100.
 // Under about 5 most people can barely tell two colours apart.
-export function colourDistance(c1, c2) {
+function colourDistance(c1, c2) {
   const p = rgbToLab(c1);
   const q = rgbToLab(c2);
   return Math.sqrt((p.L - q.L) ** 2 + (p.a - q.a) ** 2 + (p.b - q.b) ** 2);
@@ -154,7 +154,7 @@ export function colourDistance(c1, c2) {
 // The wheel wraps around, so red at 350 and red at 10 are only 20 apart, not 340.
 // Returns 0 to 180. Near 0 = similar hues (analogous), near 180 = opposite
 // (complementary). The suggestion engine uses this.
-export function hueDifference(h1, h2) {
+function hueDifference(h1, h2) {
   const d = Math.abs(h1 - h2) % 360;
   return d > 180 ? 360 - d : d;
 }
