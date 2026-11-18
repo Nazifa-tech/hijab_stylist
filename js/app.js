@@ -15,7 +15,7 @@
     if (fail) {
       fail.style.display = 'flex';
       const msg = fail.querySelector('p');
-      if (msg) msg.textContent = 'Something went wrong while loading the app. Please serve the page over HTTP (python -m http.server) and reload. Check the console for details.';
+      if (msg) msg.textContent = 'Something went wrong while loading the app. Try refreshing. If the problem persists, open this site from a web server (not as a local file) and check the browser console for details.';
     }
     console.error('[Hijab Stylist] Boot failed:', err);
   }
